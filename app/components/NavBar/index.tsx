@@ -6,8 +6,8 @@ import { GrBug } from 'react-icons/gr';
 import classnames from 'classnames';
 
 const links = [
-  { label: 'Dashboard', href: '/' },
-  { label: 'Issue', href: '/issues' },
+  { label: 'Главная', href: '/' },
+  { label: 'Задачи/Проблемы', href: '/issues' },
 ];
 
 const NavBar = () => {
