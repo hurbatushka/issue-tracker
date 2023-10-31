@@ -1,7 +1,9 @@
 'use client';
 import React from 'react';
-import { Dialog, TextField, Flex, Text, Button, TextArea } from '@radix-ui/themes';
+import { TextField, Button } from '@radix-ui/themes';
 import { MdTitle } from 'react-icons/md';
+import SimpleMDE from 'react-simplemde-editor';
+import 'easymde/dist/easymde.min.css';
 
 export default function NewIssue() {
   return (
@@ -12,7 +14,7 @@ export default function NewIssue() {
         </TextField.Slot>
         <TextField.Input size="3" placeholder="Тема обращения..." />
       </TextField.Root>
-      <TextArea size="3" className="mt-5" placeholder="Опишите проблему..." />
+      <SimpleMDE placeholder="Опишите Вашу проблему..." />
       <Button>Отправить</Button>
     </div>
   );
