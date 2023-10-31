@@ -1,10 +1,13 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Roboto } from 'next/font/google';
 
 import NavBar from './components/NavBar';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Roboto({
+  weight: '400',
+  subsets: ['latin'],
+});
 
 export const metadata: Metadata = {
   title: 'Issue Tracker',
@@ -16,7 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={inter.className}>
         <NavBar />
-        <main>{children}</main>
+        <main className="flex justify-center">{children}</main>
       </body>
     </html>
   );
