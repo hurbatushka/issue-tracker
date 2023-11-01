@@ -13,3 +13,8 @@ export async function POST(request: NextRequest) {
   });
   return NextResponse.json(newIssue, { status: 201 });
 }
+
+export async function GET(request: NextRequest) {
+  const allIssue = await prisma.issue.findMany();
+  return NextResponse.json(allIssue, { status: 201 });
+}
