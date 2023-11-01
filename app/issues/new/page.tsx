@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { TextField, Button, Callout } from '@radix-ui/themes';
+import { TextField, Button, Callout, Text } from '@radix-ui/themes';
 import { MdTitle } from 'react-icons/md';
 import { BiErrorCircle } from 'react-icons/bi';
 import SimpleMDE from 'react-simplemde-editor';
@@ -8,15 +8,22 @@ import 'easymde/dist/easymde.min.css';
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { createIssueSchema } from '@/app/validationShemas';
+import { z } from 'zod';
 
-interface IssueForm {
-  title: string;
-  description: string;
-}
+type IssueForm = z.infer<typeof createIssueSchema>;
 
 export default function NewIssue() {
   const router = useRouter();
-  const { register, control, handleSubmit } = useForm<IssueForm>();
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IssueForm>({
+    resolver: zodResolver(createIssueSchema),
+  });
   const [error, setError] = useState('');
   return (
     <div className="max-w-xl">
@@ -44,12 +51,23 @@ export default function NewIssue() {
           </TextField.Slot>
           <TextField.Input size="3" placeholder="Тема обращения..." {...register('title')} />
         </TextField.Root>
+        {errors.title && (
+          <Text color="red" as="p">
+            {errors.title.message}
+          </Text>
+        )}
         <Controller
           name="description"
           control={control}
           render={({ field }) => (
             <SimpleMDE placeholder="Опишите Вашу проблему..." {...field} />
           )}></Controller>
+        {errors.description && (
+          <Text color="red" as="p">
+            {errors.description.message as 'Описание отсутсвует'}
+          </Text>
+        )}
+
         <Button>Отправить</Button>
       </form>
     </div>
