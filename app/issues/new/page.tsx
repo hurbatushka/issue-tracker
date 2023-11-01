@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createIssueSchema } from '@/app/validationShemas';
 import { z } from 'zod';
+import ErrorMessage from '@/app/components/ErrorMessage';
 
 type IssueForm = z.infer<typeof createIssueSchema>;
 
@@ -51,23 +52,14 @@ export default function NewIssue() {
           </TextField.Slot>
           <TextField.Input size="3" placeholder="Тема обращения..." {...register('title')} />
         </TextField.Root>
-        {errors.title && (
-          <Text color="red" as="p">
-            {errors.title.message}
-          </Text>
-        )}
+        <ErrorMessage>{errors.title?.message}</ErrorMessage>
         <Controller
           name="description"
           control={control}
           render={({ field }) => (
             <SimpleMDE placeholder="Опишите Вашу проблему..." {...field} />
           )}></Controller>
-        {errors.description && (
-          <Text color="red" as="p">
-            {errors.description.message as 'Описание отсутсвует'}
-          </Text>
-        )}
-
+        <ErrorMessage>{errors.description?.message as 'Описание отсутсвует'}</ErrorMessage>
         <Button>Отправить</Button>
       </form>
     </div>
